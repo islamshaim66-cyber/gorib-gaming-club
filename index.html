@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#111111">
+<title>Gorib Gaming Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700;800&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --bg:#fff6ff;--card:#fff;--text:#252535;--muted:#85858d;
+ --purple:#7650c9;--purple-light:#eee5ff;--green:#12bd78;
+ --blue:#2999e9;--orange:#f28a36;--red:#e75d6c;
+ --border:#eeeaf0;--shadow:0 4px 15px rgba(40,20,60,.09)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100%;font-family:'Hind Siliguri',sans-serif;background:var(--bg);color:var(--text)}
+body{padding-bottom:82px}
+button,input,select,textarea{font-family:inherit}
+button{border:0;cursor:pointer}
+button:disabled{cursor:not-allowed}
+.hidden{display:none!important}
+#app{width:100%;max-width:700px;margin:auto;min-height:100vh;background:var(--bg);position:relative}
+.topbar{height:64px;background:#111;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:30}
+.topbar h2{font-family:Roboto,sans-serif;font-size:19px;font-weight:700}
+.topbar button{background:transparent;color:#fff;font-size:24px}
+.brandbar{background:#fff;display:flex;align-items:center;gap:12px;padding:13px 17px;min-height:84px;border-bottom:1px solid #f1edf1}
+.logo{width:58px;height:58px;border-radius:50%;object-fit:cover;background:#eee;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px;flex-shrink:0}
+.brandinfo{flex:1;min-width:0}
+.brandinfo h3{font-size:19px;font-weight:700}
+.brandinfo p{font-size:12px;color:var(--muted)}
+.wallet-pill{border:1px solid var(--red);border-radius:25px;color:var(--red);padding:8px 13px;font-weight:700;background:white;white-space:nowrap}
+.content{padding:14px 16px 24px}
+.banner-wrap{position:relative;margin-bottom:14px;cursor:pointer}
+.banner{width:100%;height:185px;border-radius:17px;overflow:hidden;background:#24202b;box-shadow:var(--shadow)}
+.banner img{width:100%;height:100%;object-fit:cover;display:block}
+.banner-dots{display:flex;justify-content:center;gap:7px;padding:8px}
+.banner-dots span{width:9px;height:9px;border-radius:50%;background:#d6d1d8}
+.banner-dots span.active{background:#f0a52e}
+.notice{background:#fff7e6;color:#987d49;padding:12px;border-radius:8px;font-size:13px;line-height:1.55;margin:10px 0 22px;overflow:hidden}
+.notice-text{display:block;white-space:normal}
+.section-title{text-align:center;font-size:22px;font-weight:800;margin:17px 0 18px}
+.category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.category-card{background:#fff;border:1px solid #e8e1ee;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);text-align:left;min-width:0;transition:.15s}
+.category-card:active{transform:scale(.98)}
+.category-card img{width:100%;height:105px;object-fit:cover;background:#e9e9e9;display:block}
+.category-card .cat-label{padding:9px 10px 11px}
+.category-card h3{font-size:15px;font-weight:700}
+.category-card p{font-size:11px;color:var(--muted)}
+.category-heading{display:flex;align-items:center;justify-content:space-between;margin:16px 0}
+.category-heading h3{font-size:19px;font-weight:700}
+.back-btn{background:#999;color:#fff;border-radius:13px;padding:9px 16px;font-size:13px}
+.match-list{display:flex;flex-direction:column;gap:14px}
+.match-card{background:#fff;border:1px solid #eee8f0;border-radius:17px;padding:14px;box-shadow:var(--shadow);overflow:hidden}
+.match-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.map-image{width:108px;height:94px;object-fit:cover;border-radius:12px;background:#ddd;flex-shrink:0;cursor:pointer}
+.match-info{flex:1;min-width:0;cursor:pointer}
+.match-info h3{font-size:16px;font-weight:700;overflow-wrap:anywhere}
+.match-info p{font-size:12px;color:var(--muted);line-height:1.55}
+.match-tag{background:var(--purple);color:#fff;border-radius:9px;padding:4px 9px;font-size:10px;align-self:flex-start}
+.match-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:13px}
+.stat{border:1px solid #e9e6e9;border-radius:13px;text-align:center;padding:10px 3px;min-width:0}
+.stat small{font-size:10px;color:#999;display:block}
+.stat b{font-size:15px;display:block;margin-top:3px}
+.match-meta{display:flex;justify-content:space-between;font-size:12px;color:#888;margin:8px 0}
+.progress{height:9px;background:#e7e7e7;border-radius:20px;overflow:hidden;margin:9px 0}
+.progress span{height:100%;display:block;background:linear-gradient(90deg,#27a3ed,#26cf9a);border-radius:20px}
+.match-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.btn{border-radius:12px;padding:12px 10px;color:#fff;font-weight:700;font-size:14px;min-height:45px}
+.btn-blue{background:linear-gradient(110deg,#258cdb,#43b3e9)}
+.btn-green{background:linear-gradient(110deg,#0bbd77,#36d99a)}
+.btn-orange{background:var(--orange)}
+.btn-purple{background:var(--purple)}
+.btn-gray{background:#777}
+.empty{background:#fff;border-radius:14px;padding:30px 15px;text-align:center;color:#999;font-size:14px;box-shadow:var(--shadow)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#f8eff9;border-top:1px solid #eee5ef;display:grid;grid-template-columns:repeat(4,1fr);max-width:700px;margin:auto;padding:8px 5px 9px}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;color:#777;background:none;padding:4px}
+.nav-item .ico{font-size:24px;line-height:30px}
+.nav-item span:last-child{font-size:12px}
+.nav-item.active{color:var(--purple)}
+.nav-item.active .ico{background:#eee3ff;border-radius:25px;padding:1px 22px}
+.page{display:none}
+.page.active{display:block}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{width:100%;max-width:430px;max-height:88vh;overflow-y:auto;background:#fff;border-radius:17px;padding:19px;box-shadow:0 10px 40px #0003}
+.modal h3{font-size:20px;margin-bottom:13px}
+.modal p{font-size:13px;line-height:1.6;color:#666;margin:6px 0}
+.modal-actions{display:flex;gap:9px;margin-top:16px}
+.modal-actions button{flex:1}
+.field{margin:12px 0}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;outline:none;background:#fff;font-size:14px;color:#222}
+.field input:focus,.field textarea:focus{border-color:var(--purple)}
+.toast{position:fixed;left:50%;bottom:95px;transform:translateX(-50%);background:#292929;color:#fff;padding:13px 18px;border-radius:13px;width:max-content;max-width:90%;text-align:center;font-size:13px;z-index:200;box-shadow:0 5px 20px #0003}
+.profile-card{background:linear-gradient(130deg,#536fe4,#7650c9);border-radius:17px;color:#fff;padding:22px;margin:12px 0 18px;text-align:center}
+.profile-avatar{width:70px;height:70px;border-radius:50%;background:#fff;color:#7650c9;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 9px}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.profile-stats div{background:#ffffff22;border-radius:10px;padding:10px}
+.menu-list{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.menu-row{width:100%;padding:14px 15px;background:#fff;display:flex;align-items:center;gap:12px;text-align:left;border-bottom:1px solid #f1edf1;font-size:14px;color:#333}
+.menu-row:last-child{border-bottom:0}
+.menu-row .mi{font-size:20px;width:27px;text-align:center}
+.menu-row .arrow{margin-left:auto;color:#aaa}
+.balance-card{background:#171717;color:#fff;border-radius:16px;padding:23px 17px;margin:12px 0;text-align:center}
+.balance-card small{color:#aaa}
+.balance-card h2{font-size:29px;margin:6px 0}
+.balance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:12px 0}
+.balance-grid div{background:#fff;border-radius:12px;padding:12px 5px;text-align:center;box-shadow:var(--shadow)}
+.balance-grid small{font-size:10px;color:#999;display:block}
+.balance-grid b{font-size:14px}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.history-item{background:#fff;padding:13px;border-radius:12px;margin:9px 0;display:flex;justify-content:space-between;gap:10px;box-shadow:var(--shadow);font-size:13px}
+.history-item small{display:block;color:#999}
+.payment-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:15px 0}
+.payment-method{border:1px solid #eee;border-radius:13px;background:#fff;padding:13px 5px;text-align:center;font-weight:700}
+.payment-method:active{border-color:var(--purple)}
+.payment-method .pm-icon{font-size:27px;display:block;margin-bottom:5px}
+.rule-box{background:#fff;padding:15px;border-radius:12px;line-height:1.7;font-size:13px}
+.loading{padding:30px;text-align:center;color:#999}
+.login-screen{padding:25px 18px;max-width:440px;margin:25px auto}
+.login-screen .logo-big{width:85px;height:85px;border-radius:50%;background:#eee;margin:0 auto 15px;object-fit:cover}
+.login-screen h2{text-align:center;margin-bottom:5px}
+.login-screen>p{text-align:center;color:#888;font-size:13px;margin-bottom:20px}
+.small-note{font-size:11px;color:#999;line-height:1.5}
+.result-card{background:#fff;border-radius:12px;padding:14px;margin:10px 0;box-shadow:var(--shadow)}
+.result-card h3{font-size:16px}
+.result-card p{font-size:12px;color:#888}
+.leader-row{display:flex;align-items:center;background:#fff;border-radius:12px;margin:8px 0;padding:12px;gap:10px;box-shadow:var(--shadow)}
+.leader-number{width:28px;height:28px;background:#f1e9ff;color:var(--purple);border-radius:50%;display:grid;place-items:center;font-weight:700}
+.leader-row .leader-info{flex:1}
+.leader-row small{display:block;color:#999}
+.cooldown-notice{background:#fff4e5;color:#9b641d;padding:11px;border-radius:10px;font-size:12px;line-height:1.6;margin:10px 0}
+.detail-heading{background:#f4efff;padding:12px;border-radius:12px;margin-bottom:12px}
+.detail-heading h3{margin:0;font-size:18px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}
+.detail-box{border:1px solid #eee;border-radius:11px;padding:11px;text-align:center}
+.detail-box small{display:block;color:#999;font-size:11px}
+.detail-box b{font-size:14px}
+.detail-section{margin-top:14px;padding:13px;background:#faf8fc;border-radius:11px}
+.detail-section h4{font-size:15px;margin-bottom:7px;color:var(--purple)}
+.player-count{font-size:21px;font-weight:800;color:var(--green)}
+.help-center-btn{position:fixed;right:max(15px,calc((100vw - 700px)/2 + 15px));bottom:82px;z-index:60;background:linear-gradient(120deg,#7650c9,#2999e9);color:#fff;border-radius:30px;padding:12px 17px;font-size:13px;font-weight:700;box-shadow:0 4px 16px #0003;display:flex;align-items:center;gap:7px}
+.help-center-btn:active{transform:scale(.96)}
+.match-countdown{margin:13px 0 10px;padding:12px 10px;border-radius:11px;background:linear-gradient(110deg,#079b61,#18c982);color:#fff;text-align:center;font-family:Roboto,sans-serif;font-weight:900;font-size:16px;letter-spacing:.5px}
+.match-countdown.started{background:linear-gradient(110deg,#d94b4b,#f07845)}
+.match-countdown small{display:block;font-family:'Hind Siliguri',sans-serif;font-size:11px;font-weight:600;margin-bottom:4px}
+@media(min-width:600px){.content{padding-left:22px;padding-right:22px}.banner{height:230px}}
+</style>
+</head>
+
+<body>
+<div id="app">
+<header class="topbar">
+ <h2 id="topTitle">Gorib Gaming Club</h2>
+ <button onclick="showMenu()" aria-label="Menu">⋮</button>
+</header>
+
+<div id="authScreen" class="login-screen hidden">
+ <div style="text-align:center"><img id="loginLogo" class="logo-big" src="" alt="Logo"></div>
+ <h2 id="loginAppName">Gorib Gaming Club</h2>
+ <p>Free Fire Tournament</p>
+ <div class="field"><label>ইমেইল</label><input id="loginEmail" type="email" placeholder="আপনার ইমেইল লিখুন"></div>
+ <div class="field"><label>পাসওয়ার্ড</label><input id="loginPassword" type="password" placeholder="পাসওয়ার্ড লিখুন"></div>
+ <button class="btn btn-purple" style="width:100%" onclick="login()">Login</button>
+ <button class="btn btn-blue" style="width:100%;margin-top:10px" onclick="register()">নতুন অ্যাকাউন্ট তৈরি করুন</button>
+ <button class="btn btn-gray" style="width:100%;margin-top:10px" onclick="googleLogin()">Google দিয়ে Login</button>
+ <p class="small-note" style="text-align:center;margin-top:15px">আপনার অ্যাকাউন্ট দিয়ে লগইন করুন</p>
+</div>
+
+<div id="mainApp" class="hidden">
+ <div class="brandbar">
+  <img id="brandLogo" class="logo" src="" alt="Logo">
+  <div class="brandinfo"><h3 id="brandName">Gorib Gaming Club</h3><p>Free Fire Tournament</p></div>
+  <button onclick="openPage('profile')" style="background:none;font-size:21px">♟</button>
+  <button class="wallet-pill" onclick="openWallet()">৳ <span id="headerBalance">0</span></button>
+ </div>
+
+ <main class="content">
+  <section id="page-play" class="page active">
+   <div class="banner-wrap" onclick="clickBanner()">
+    <div class="banner"><img id="bannerImage" src="" alt="Banner"></div>
+    <div class="banner-dots" id="bannerDots"></div>
+   </div>
+   <div class="notice"><span id="noticeText" class="notice-text">আমাদের টুর্নামেন্টে আপনাকে স্বাগতম।</span></div>
+   <div id="homeCategoryView">
+    <h2 class="section-title">FREE FIRE</h2>
+    <div id="categoryGrid" class="category-grid"><div class="loading">ক্যাটাগরি লোড হচ্ছে...</div></div>
+   </div>
+   <div id="selectedCategoryView" class="hidden">
+    <div class="category-heading"><h3 id="selectedCategoryName">BR</h3><button class="back-btn" onclick="backToCategories()">Back</button></div>
+    <div id="categoryMatchList" class="match-list"><div class="loading">ম্যাচ লোড হচ্ছে...</div></div>
+   </div>
+  </section>
+
+  <section id="page-matches" class="page"><h2 class="section-title">My Matches</h2><div id="myMatchList"><div class="loading">লোড হচ্ছে...</div></div></section>
+  <section id="page-results" class="page"><h2 class="section-title">Results</h2><div id="resultsList"><div class="loading">লোড হচ্ছে...</div></div></section>
+
+  <section id="page-profile" class="page">
+   <div class="profile-card">
+    <div class="profile-avatar">👤</div>
+    <h2 id="profileName">Player</h2>
+    <p id="profileEmail" style="font-size:12px;opacity:.8"></p>
+    <div class="profile-stats">
+     <div><b id="playedCount">0</b><br><small>Match Played</small></div>
+     <div><b id="wonCount">0</b><br><small>Won</small></div>
+    </div>
+   </div>
+   <div class="menu-list">
+    <button class="menu-row" onclick="openWallet()"><span class="mi">💰</span>My Wallet <span class="arrow">›</span></button>
+    <button class="menu-row" onclick="openWithdraw()"><span class="mi">🏦</span>Withdraw <span class="arrow">›</span></button>
+    <button class="menu-row" onclick="editProfile()"><span class="mi">👤</span>My Profile <span class="arrow">›</span></button>
+    <button class="menu-row" onclick="showRules()">📜 All Rules</button>
+    <button class="menu-row" onclick="showTopPlayers()">🏆 Top Players</button>
+    <button class="menu-row" onclick="showDeveloper()">👨‍💻 Developer Profile</button>
+    <button class="menu-row" onclick="logout()" style="color:#e45a5a">🚪 Logout</button>
+   </div>
+  </section>
+ </main>
+
+ <nav class="bottom-nav">
+  <button class="nav-item active" data-page="play" onclick="openPage('play')"><span class="ico">🎮</span><span>Play</span></button>
+  <button class="nav-item" data-page="matches" onclick="openPage('matches')"><span class="ico">📋</span><span>My Matches</span></button>
+  <button class="nav-item" data-page="results" onclick="openPage('results')"><span class="ico">🏆</span><span>Results</span></button>
+  <button class="nav-item" data-page="profile" onclick="openPage('profile')"><span class="ico">👤</span><span>Profile</span></button>
+ </nav>
+ <button class="help-center-btn" onclick="openHelpCenter()">💬 Help Center</button>
+</div>
+</div>
+
+<div id="modalRoot"></div>
+<div id="toastRoot"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script>
+"use strict";
+
+const firebaseConfig={
+ apiKey:"AIzaSyDgItOCn34rH63E3LR6Q8wc1vvPtLF5LeY",
+ authDomain:"gorib-gamer.firebaseapp.com",
+ databaseURL:"https://gorib-gamer-default-rtdb.firebaseio.com",
+ projectId:"gorib-gamer",
+ storageBucket:"gorib-gamer.firebasestorage.app",
+ messagingSenderId:"365071135",
+ appId:"1:365071135:web:1881f4be0fc722978d3e2a",
+ measurementId:"G-C81JGLN3NE"
+};
+
+const ROOT="goribGamingClub";
+const CLOUDINARY_CLOUD="kc9txmad";
+const CLOUDINARY_PRESET="gorib_app_assets";
+const CLOUDINARY_URL="https://api.cloudinary.com/v1_1/"+CLOUDINARY_CLOUD+"/image/upload";
+
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const db=firebase.database();
+
+let currentUser=null,userData={},allMatches={},allCategories={},allResults={},myJoins={};
+let banners=[],bannerIndex=0,bannerTimer=null,selectedCategory=null,appSettings={},listenersStarted=false;
+let withdrawSubmitting=false;
+
+const WITHDRAW_COOLDOWN=12*60*60*1000;
+const $=id=>document.getElementById(id);
+const ref=path=>db.ref(ROOT+"/"+path);
+const money=value=>"৳ "+Number(value||0).toLocaleString("en-US");
+const val=v=>v===undefined||v===null?"":String(v);
+const normalize=s=>String(s||"").trim().toLowerCase().replace(/[\s_\-]+/g,"").replace(/[^\p{L}\p{N}]/gu,"");
+const escapeHTML=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const objectValues=o=>o&&typeof o==="object"?Object.entries(o).map(([id,v])=>({id,...(v||{})})):[];
+const timestamp=()=>Date.now();
+
+function toast(message){
+ $("toastRoot").innerHTML='<div class="toast">'+escapeHTML(message)+'</div>';
+ clearTimeout(toast.timer);
+ toast.timer=setTimeout(()=>$("toastRoot").innerHTML="",3000);
+}
+function showModal(html){
+ $("modalRoot").innerHTML='<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal">'+html+'</div></div>';
+}
+function closeModal(){$("modalRoot").innerHTML="";}
+function showLoading(message="অপেক্ষা করুন..."){showModal('<div class="loading">'+escapeHTML(message)+'</div>');}
+function showMenu(){
+ showModal(`<h3>Menu</h3>
+ <button class="menu-row" onclick="closeModal();openPage('play')">🎮 Play</button>
+ <button class="menu-row" onclick="closeModal();openPage('matches')">📋 My Matches</button>
+ <button class="menu-row" onclick="closeModal();openWallet()">💰 Wallet</button>
+ <button class="menu-row" onclick="closeModal();showRules()">📜 Rules</button>
+ <button class="menu-row" onclick="closeModal();openHelpCenter()">💬 Help Center</button>
+ <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div>`);
+}
+
+/* HELP CENTER */
+function getHelpLink(){
+ return appSettings.helpCenterLink||appSettings.supportLink||appSettings.telegramLink||
+ appSettings.whatsappLink||appSettings.telegram||appSettings.contactLink||"";
+}
+function openHelpCenter(){
+ const link=String(getHelpLink()||"").trim();
+ showModal(`<div style="text-align:center;padding:8px 0">
+ <div style="font-size:42px">💬</div><h3>Help Center</h3>
+ <p>আপনার কোনো সমস্যা বা প্রশ্ন থাকলে আমাদের Support Team-এর সাথে যোগাযোগ করুন।</p>
+ ${link?'<button class="btn btn-green" style="width:100%;margin-top:12px" onclick="contactSupport()">Contact Support</button>':'<div class="cooldown-notice">Admin এখনো Help Center-এর যোগাযোগ লিংক সেট করেননি।</div>'}
+ <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div></div>`);
+}
+function contactSupport(){
+ const link=String(getHelpLink()||"").trim();
+ if(!link)return toast("Support Link এখনো সেট করা হয়নি");
+ if(!/^https?:\/\//i.test(link))return toast("Admin-এর Support Link সঠিক নয়");
+ window.open(link,"_blank","noopener");
+}
+
+/* AUTHENTICATION */
+auth.onAuthStateChanged(async user=>{
+ currentUser=user;
+ if(!user){
+  $("authScreen").classList.remove("hidden");
+  $("mainApp").classList.add("hidden");
+  return;
+ }
+ $("authScreen").classList.add("hidden");
+ $("mainApp").classList.remove("hidden");
+ listenersStarted=false;
+ try{
+  const snap=await ref("users/"+user.uid).once("value");
+  if(!snap.exists()){
+   const newUser={uid:user.uid,email:user.email||"",name:user.displayName||"Player",balance:0,played:0,won:0,kills:0,createdAt:timestamp()};
+   await ref("users/"+user.uid).set(newUser);
+   userData=newUser;
+  }else userData=snap.val()||{};
+  startListeners();
+  renderProfile();
+ }catch(error){
+  console.error(error);
+  toast("ডেটা লোড করা যায়নি: "+error.message);
+ }
+});
+
+async function login(){
+ const email=$("loginEmail").value.trim(),password=$("loginPassword").value;
+ if(!email||!password)return toast("ইমেইল ও পাসওয়ার্ড লিখুন");
+ try{await auth.signInWithEmailAndPassword(email,password);}
+ catch(e){toast(authError(e));}
+}
+async function register(){
+ const email=$("loginEmail").value.trim(),password=$("loginPassword").value;
+ if(!email||password.length<6)return toast("সঠিক ইমেইল ও কমপক্ষে ৬ অক্ষরের পাসওয়ার্ড দিন");
+ try{
+  const result=await auth.createUserWithEmailAndPassword(email,password);
+  const name=email.split("@")[0];
+  await ref("users/"+result.user.uid).set({uid:result.user.uid,email,name,balance:0,played:0,won:0,kills:0,createdAt:timestamp()});
+  toast("অ্যাকাউন্ট তৈরি হয়েছে");
+ }catch(e){toast(authError(e));}
+}
+async function googleLogin(){
+ try{await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());}
+ catch(e){toast(authError(e));}
+}
+async function logout(){
+ closeModal();
+ try{await auth.signOut();}catch(e){toast(authError(e));}
+}
+function authError(e){
+ const map={
+  "auth/invalid-email":"ইমেইল ঠিক নয়","auth/user-not-found":"অ্যাকাউন্ট পাওয়া যায়নি",
+  "auth/wrong-password":"পাসওয়ার্ড ভুল","auth/email-already-in-use":"এই ইমেইলে অ্যাকাউন্ট আছে",
+  "auth/weak-password":"পাসওয়ার্ড আরও শক্তিশালী দিন","auth/popup-blocked":"Google Login popup ব্লক হয়েছে"
+ };
+ return map[e.code]||e.message||"সমস্যা হয়েছে";
+}
+
+/* REALTIME LISTENERS */
+function startListeners(){
+ if(listenersStarted)return;
+ listenersStarted=true;
+ ref("users/"+currentUser.uid).on("value",snap=>{
+  userData=snap.val()||{};
+  renderHeader();renderProfile();
+ });
+ ref("settings").on("value",snap=>{appSettings=snap.val()||{};renderSettings();});
+ ref("settings/gameCategories").on("value",snap=>{allCategories=snap.val()||{};renderCategories();});
+ ref("matches").on("value",snap=>{
+  allMatches=snap.val()||{};
+  renderCategories();renderSelectedCategoryMatches();renderMyMatches();
+ });
+ ref("joins/"+currentUser.uid).on("value",snap=>{
+  myJoins=snap.val()||{};
+  renderCategories();renderSelectedCategoryMatches();renderMyMatches();
+ });
+ ref("results").on("value",snap=>{allResults=snap.val()||{};renderResults();});
+ ref("banners").on("value",snap=>{
+  const primary=snap.val();
+  if(primary&&Object.keys(primary).length)banners=objectValues(primary).filter(x=>x.active!==false);
+  else banners=[];
+  if(!banners.length){
+   ref("settings/banners").once("value").then(s=>{
+    banners=objectValues(s.val()).filter(x=>x.active!==false);renderBanners();
+   });
+  }else renderBanners();
+ });
+}
+
+/* SETTINGS / BRANDING */
+function renderSettings(){
+ const logo=appSettings.playerAppLogo||appSettings.logo||"";
+ const name=appSettings.appName||appSettings.playerAppName||"Gorib Gaming Club";
+ const notice=appSettings.notice;
+ $("brandName").textContent=name;$("topTitle").textContent=name;$("loginAppName").textContent=name;
+ if(logo){$("brandLogo").src=logo;$("loginLogo").src=logo;}
+ else{
+  $("brandLogo").src="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="55%" text-anchor="middle" font-size="18" fill="#777">Logo</text></svg>');
+  $("loginLogo").src=$("brandLogo").src;
+ }
+ if(typeof notice==="string")$("noticeText").textContent=notice;
+ else if(notice&&typeof notice==="object")$("noticeText").textContent=notice.text||notice.message||"আমাদের টুর্নামেন্টে আপনাকে স্বাগতম।";
+ const maintenance=appSettings.maintenanceMode;
+ if(maintenance===true||(maintenance&&maintenance.enabled===true)){
+  if(!document.getElementById("maintenanceNotice")){
+   const el=document.createElement("div");el.id="maintenanceNotice";el.className="notice";
+   el.style.background="#ffe8e8";el.style.color="#b23a3a";
+   el.textContent=(maintenance&&maintenance.message)||"অ্যাপটি সাময়িক রক্ষণাবেক্ষণে রয়েছে।";
+   $("page-play").prepend(el);
+  }
+ }else{const el=$("maintenanceNotice");if(el)el.remove();}
+ renderRulesContent();
+}
+
+/* BANNER SLIDER & CLICK REDIRECTION */
+function getBannerImage(b){return b.imageUrl||b.image||b.url||b.bannerUrl||"";}
+function renderBanners(){
+ clearInterval(bannerTimer);
+ if(!banners.length){
+  $("bannerImage").src="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="600" height="250"><rect width="100%" height="100%" fill="#25202d"/><text x="50%" y="52%" text-anchor="middle" font-size="25" fill="white">Gorib Gaming Club</text></svg>');
+  $("bannerDots").innerHTML="";return;
+ }
+ bannerIndex=0;showBanner();
+ if(banners.length>1)bannerTimer=setInterval(()=>{bannerIndex=(bannerIndex+1)%banners.length;showBanner();},4000);
+}
+function showBanner(){
+ const item=banners[bannerIndex],src=getBannerImage(item);
+ if(src)$("bannerImage").src=src;
+ $("bannerDots").innerHTML=banners.map((_,i)=>'<span class="'+(i===bannerIndex?"active":"")+'"></span>').join("");
+}
+function clickBanner(){
+ const item=banners[bannerIndex];
+ if(!item)return;
+ const link=item.link||item.videoUrl||item.url||item.targetUrl||"";
+ if(link){
+  window.open(link,"_blank","noopener");
+ }else{
+  toast("এই ব্যানারের কোনো লিংক বা ভিডিও সেট করা হয়নি");
+ }
+}
+
+/* CATEGORY MATCHING */
+function getCategoryEntries(){
+ return Object.entries(allCategories||{}).map(([id,c])=>({
+  id,name:typeof c==="string"?c:(c.name||c.title||c.categoryName||c.label||id),
+  image:typeof c==="object"?(c.imageUrl||c.image||c.icon||c.banner||""):"",
+  description:typeof c==="object"?(c.description||""):""
+ })).filter(c=>c.name);
+}
+function matchCategoryValues(match){
+ return [match.categoryId,match.categoryKey,match.category,match.categoryName,match.gameCategory,match.gameMode,match.categoryTitle]
+ .filter(v=>v!==undefined&&v!==null&&String(v).trim()!=="").map(v=>String(v));
+}
+function matchBelongsToCategory(match,category){
+ const wantedId=normalize(category.id),wantedName=normalize(category.name);
+ return matchCategoryValues(match).map(normalize).some(v=>v===wantedId||v===wantedName);
+}
+function getCategoryName(match){
+ const values=matchCategoryValues(match);
+ if(values.length)return values[0];
+ const category=getCategoryEntries().find(c=>c.id===match.categoryId);
+ return category?.name||match.categoryName||"Free Fire";
+}
+function renderCategories(){
+ const categories=getCategoryEntries(),grid=$("categoryGrid");
+ if(!categories.length){
+  grid.innerHTML='<div class="empty" style="grid-column:1/-1">এখনো কোনো ক্যাটাগরি তৈরি করা হয়নি।</div>';return;
+ }
+ grid.innerHTML=categories.map(cat=>`
+  <button class="category-card" onclick="selectCategory('${escapeHTML(cat.id)}')">
+   <img src="${escapeHTML(cat.image||placeholderImage())}" onerror="this.src='${placeholderImage()}'" alt="">
+   <div class="cat-label"><h3>${escapeHTML(cat.name)}</h3><p>${escapeHTML(cat.description||"Tournament Matches")}</p></div>
+  </button>`).join("");
+ if(selectedCategory){
+  const stillExists=categories.find(c=>c.id===selectedCategory.id);
+  if(stillExists)renderSelectedCategoryMatches();else backToCategories();
+ }
+}
+function placeholderImage(){
+ return "data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="180"><rect width="100%" height="100%" fill="#ddd"/><text x="50%" y="55%" text-anchor="middle" font-size="23" fill="#999">Map</text></svg>');
+}
+function selectCategory(categoryId){
+ const category=getCategoryEntries().find(c=>c.id===categoryId);if(!category)return;
+ selectedCategory=category;$("homeCategoryView").classList.add("hidden");
+ $("selectedCategoryView").classList.remove("hidden");
+ $("selectedCategoryName").textContent=category.name;
+ renderSelectedCategoryMatches();window.scrollTo({top:0,behavior:"smooth"});
+}
+function backToCategories(){
+ selectedCategory=null;$("selectedCategoryView").classList.add("hidden");
+ $("homeCategoryView").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* MATCH ORDER */
+function getMatchListForCategory(category){
+ return Object.entries(allMatches||{}).map(([id,m])=>({id,...(m||{})}))
+ .filter(m=>matchBelongsToCategory(m,category))
+ .filter(m=>!["deleted","removed"].includes(String(m.status||"").toLowerCase()))
+ .sort((a,b)=>(Number(a.createdAt)||0)-(Number(b.createdAt)||0));
+}
+function renderSelectedCategoryMatches(){
+ if(!selectedCategory)return;
+ $("selectedCategoryName").textContent=selectedCategory.name;
+ const matches=getMatchListForCategory(selectedCategory),container=$("categoryMatchList");
+ if(!matches.length){container.innerHTML='<div class="empty">এই ক্যাটাগরিতে এখনো কোনো ম্যাচ নেই।</div>';return;}
+ container.innerHTML=matches.map(renderMatchCard).join("");
+}
+
+/* MATCH DETAILS */
+function getMatchTitle(m){return m.title||m.matchName||m.name||"Free Fire Match";}
+function getMatchMap(m){return m.map||m.mapName||m.mode||"Bermuda";}
+function getMatchDate(m){return m.date||m.matchDate||"";}
+function getMatchTime(m){return m.time||m.matchTime||"";}
+function getEntryFee(m){return Number(m.entryFee??m.fee??0);}
+function getPrize(m){return Number(m.prizePool??m.winPrize??m.prize??0);}
+function getPerKill(m){return Number(m.perKill??m.killReward??0);}
+function getMaxPlayers(m){return Number(m.maxPlayers||m.totalSlots||48);}
+function getJoinedCount(m){return Number(m.playersJoined??m.joinedCount??0);}
+
+function matchStartTimestamp(m){
+ const date=String(getMatchDate(m)||"").trim();
+ const time=String(getMatchTime(m)||"").trim();
+ if(!date||!time)return 0;
+
+ let match=date.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+ if(match){
+  const year=Number(match[1]),month=Number(match[2])-1,day=Number(match[3]);
+  const tm=time.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+  if(!tm)return 0;
+  let hour=Number(tm[1]),minute=Number(tm[2]);
+  const ap=(tm[3]||"").toUpperCase();
+  if(ap==="PM"&&hour<12)hour+=12;
+  if(ap==="AM"&&hour===12)hour=0;
+  if(hour>23||minute>59||month<0||month>11||day<1||day>31)return 0;
+  const d=new Date(year,month,day,hour,minute,0,0);
+  if(d.getFullYear()!==year||d.getMonth()!==month||d.getDate()!==day)return 0;
+  return d.getTime();
+ }
+ const parsed=new Date(date+" "+time);
+ return Number.isNaN(parsed.getTime())?0:parsed.getTime();
+}
+function formatDateTime(m){
+ const d=getMatchDate(m),t=getMatchTime(m);
+ if(!d&&!t)return "সময় নির্ধারিত নয়";
+ return (d+" "+t).trim();
+}
+function matchStatus(m){return String(m.status||"upcoming").toLowerCase();}
+
+function isMatchJoinTimeOpen(m){
+ const start=matchStartTimestamp(m);
+ return start>0&&Date.now()<start;
+}
+function getMatchCountdownHTML(m){
+ const start=matchStartTimestamp(m);
+ if(!start)return '<div class="match-countdown started"><small>⏰ MATCH TIME</small>সময় নির্ধারিত নয়</div>';
+ const remaining=start-Date.now();
+ if(remaining<=0)return '<div class="match-countdown started"><small>⏰ MATCH STATUS</small>MATCH STARTED · JOINING CLOSED</div>';
+ const total=Math.floor(remaining/1000);
+ const days=Math.floor(total/86400);
+ const hours=Math.floor((total%86400)/3600);
+ const minutes=Math.floor((total%3600)/60);
+ const seconds=total%60;
+ const timer=(days>0?days+"D ":"")+String(hours).padStart(2,"0")+":"+String(minutes).padStart(2,"0")+":"+String(seconds).padStart(2,"0");
+ return '<div class="match-countdown"><small>⏱ MATCH STARTS IN</small>'+timer+'</div>';
+}
+
+/* JOIN STATUS */
+function joinStatus(j){return String(j?.status||"pending").trim().toLowerCase();}
+function isRejectedJoin(j){return ["rejected","cancelled","canceled","deleted"].includes(joinStatus(j));}
+function isJoinedPlayer(j){return !!j&&typeof j==="object"&&!isRejectedJoin(j);}
+function isApproved(j){return ["approved","accepted","confirmed","success","joined","active"].includes(joinStatus(j));}
+
+/* MATCH CARD */
+function renderMatchCard(m){
+ const max=getMaxPlayers(m),joined=getJoinedCount(m),remaining=Math.max(0,max-joined);
+ const percent=max>0?Math.min(100,joined/max*100):0;
+ const mapImage=m.mapImage||m.imageUrl||m.image||"";
+ const alreadyJoined=isJoinedPlayer(myJoins[m.id]);
+ const timeOpen=isMatchJoinTimeOpen(m);
+ const full=remaining<=0||["full","completed","closed"].includes(matchStatus(m))||!timeOpen;
+ const joinLabel=alreadyJoined?"Joined":!timeOpen?"Match Started":full?"Full":"Join Now";
+
+ return `
+ <article class="match-card">
+  <div class="match-top">
+   <img class="map-image" src="${escapeHTML(mapImage||placeholderImage())}" onclick="showMatchDetails('${escapeHTML(m.id)}')" onerror="this.src='${placeholderImage()}'" alt="Map">
+   <div class="match-info" onclick="showMatchDetails('${escapeHTML(m.id)}')">
+    <h3>${escapeHTML(getMatchTitle(m))}</h3>
+    <p>${escapeHTML(m.mode||m.matchType||"Solo")} | ${escapeHTML(m.device||m.platform||"Mobile")} | ${escapeHTML(m.matchLevel||m.level||"Regular")}</p>
+    <p>${escapeHTML(formatDateTime(m))}</p>
+   </div>
+   <span class="match-tag">${escapeHTML(m.matchCode||m.code||"MATCH")}</span>
+  </div>
+  <div class="match-stats">
+   <div class="stat"><small>WIN PRIZE</small><b>${money(getPrize(m))}</b></div>
+   <div class="stat"><small>PER KILL</small><b>${money(getPerKill(m))}</b></div>
+   <div class="stat"><small>ENTRY FEE</small><b>${money(getEntryFee(m))}</b></div>
+  </div>
+  <div class="match-meta">
+   <span>${escapeHTML(m.mode||m.matchType||"Solo")}</span>
+   <span>${escapeHTML(getMatchMap(m))}</span>
+   <span>${escapeHTML(m.device||m.platform||"Mobile")}</span>
+  </div>
+  <div class="progress"><span style="width:${percent}%"></span></div>
+  <div class="match-meta"><span>Only ${remaining} spots are left</span><b>${joined}/${max}</b></div>
+  ${getMatchCountdownHTML(m)}
+  <div class="match-actions">
+   <button class="btn btn-purple" onclick="showRoomDetails('${escapeHTML(m.id)}')">🔑 Room Details</button>
+   <button class="btn btn-blue" onclick="showPrizePool('${escapeHTML(m.id)}')">🏆 Prize Pool</button>
+  </div>
+  <div style="margin-top:10px">
+   <button class="btn ${alreadyJoined?'btn-gray':'btn-green'}" style="width:100%;${full&&!alreadyJoined?'opacity:.55':''}" ${full&&!alreadyJoined?'disabled':''} onclick="startJoin('${escapeHTML(m.id)}')">${joinLabel}</button>
+  </div>
+ </article>`;
+}
+
+/* FULL MATCH DETAILS */
+function showMatchDetails(matchId){
+ const m=allMatches[matchId];if(!m)return toast("ম্যাচ পাওয়া যায়নি");
+ const max=getMaxPlayers(m),joined=getJoinedCount(m),remaining=Math.max(0,max-joined);
+ const percent=max>0?Math.min(100,joined/max*100):0;
+ const rules=m.rules||m.description||m.matchRules||"এই ম্যাচের জন্য Admin এখনো কোনো Rules যোগ করেননি।";
+ showModal(`
+  <div class="detail-heading"><h3>${escapeHTML(getMatchTitle(m))}</h3><p style="margin-bottom:0">${escapeHTML(m.matchCode||m.code||"Tournament Match")}</p></div>
+  ${getMatchCountdownHTML(m)}
+  <div class="detail-grid">
+   <div class="detail-box"><small>Category</small><b>${escapeHTML(getCategoryName(m))}</b></div>
+   <div class="detail-box"><small>Game Mode</small><b>${escapeHTML(m.mode||m.matchType||"Solo")}</b></div>
+   <div class="detail-box"><small>Device</small><b>${escapeHTML(m.device||m.platform||"Mobile")}</b></div>
+   <div class="detail-box"><small>Map</small><b>${escapeHTML(getMatchMap(m))}</b></div>
+   <div class="detail-box"><small>Win Prize</small><b>${money(getPrize(m))}</b></div>
+   <div class="detail-box"><small>Per Kill</small><b>${money(getPerKill(m))}</b></div>
+   <div class="detail-box"><small>Entry Fee</small><b>${money(getEntryFee(m))}</b></div>
+   <div class="detail-box"><small>Match Level</small><b>${escapeHTML(m.matchLevel||m.level||"Regular")}</b></div>
+  </div>
+  <div class="detail-section"><h4>📅 Match Schedule</h4><p><b>Date & Time:</b> ${escapeHTML(formatDateTime(m))}</p><p><b>Status:</b> ${escapeHTML(matchStatus(m).toUpperCase())}</p></div>
+  <div class="detail-section"><h4>📜 Match Rules</h4><p>${escapeHTML(rules).replace(/\n/g,"<br>")}</p></div>
+  <div class="detail-section"><h4>👥 Player Registration</h4><div style="text-align:center;padding:8px"><div class="player-count">${joined} / ${max}</div><p>Players Joined</p><div class="progress"><span style="width:${percent}%"></span></div><p><b>${remaining}</b> Slots Remaining</p></div></div>
+  <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button><button class="btn btn-green" ${isMatchJoinTimeOpen(m)?"":"disabled"} onclick="closeModal();startJoin('${escapeHTML(matchId)}')">Join Match</button></div>
+ `);
+}
+
+/* PRIZE POOL */
+function showPrizePool(matchId){
+ const m=allMatches[matchId];if(!m)return toast("ম্যাচ পাওয়া যায়নি");
+ showModal(`<h3>🏆 Prize Pool</h3>
+  <div class="balance-card"><small>TOTAL WIN PRIZE</small><h2>${money(getPrize(m))}</h2><small>${escapeHTML(getMatchTitle(m))}</small></div>
+  <div class="detail-grid"><div class="detail-box"><small>Win Prize</small><b>${money(getPrize(m))}</b></div><div class="detail-box"><small>Per Kill</small><b>${money(getPerKill(m))}</b></div></div>
+  <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div>`);
+}
+
+/* ROOM DETAILS */
+function getRoomId(match){return String(match.roomId||match.roomID||match.roomid||match.room_id||"").trim();}
+function getRoomPassword(match){return String(match.roomPassword||match.password||match.roomPass||match.roomPasswordText||match.room_password||"").trim();}
+function formatRemainingTime(ms){
+ const seconds=Math.max(0,Math.ceil(ms/1000));
+ const h=Math.floor(seconds/3600),m=Math.floor((seconds%3600)/60),s=seconds%60;
+ return (h?h+" ঘণ্টা ":"")+(m?m+" মিনিট ":"")+s+" সেকেন্ড";
+}
+async function showRoomDetails(matchId){
+ if(!currentUser)return toast("প্রথমে Login করুন");
+ showLoading("আপনার Registration যাচাই করা হচ্ছে...");
+ try{
+  const ownJoinSnap=await ref("joins/"+currentUser.uid+"/"+matchId).once("value");
+  let join=ownJoinSnap.val();
+  if(!isJoinedPlayer(join)){
+   const requestSnap=await ref("joinRequests/"+matchId+"/"+currentUser.uid).once("value");
+   join=requestSnap.val();
+  }
+  if(!isJoinedPlayer(join)){
+   showModal(`<div style="text-align:center;padding:12px 5px"><div style="font-size:42px">🔒</div><h3>Room Details</h3><p style="font-size:16px;font-weight:700;color:#e45a5a">আপনি এই ম্যাচে জয়েন করেননি।</p><div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div></div>`);
+   return;
+  }
+  const matchSnap=await ref("matches/"+matchId).once("value");
+  const match=matchSnap.val();
+  if(!match){
+   showModal(`<h3>Room Details</h3><div class="cooldown-notice">ম্যাচের তথ্য পাওয়া যায়নি।</div><div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div>`);
+   return;
+  }
+  const startTime=matchStartTimestamp(match),now=Date.now(),revealTime=startTime>0?startTime-(3*60*1000):0;
+  if(startTime>0&&now<revealTime){
+   showModal(`<div style="text-align:center;padding:12px 5px"><div style="font-size:42px">⏳</div><h3>Room Details</h3><div class="cooldown-notice"><b>Room ID ও Password এখনো প্রকাশ করা হয়নি।</b><br><br>ম্যাচ শুরু হওয়ার ২-৩ মিনিট আগে অ্যাডমিন Room ID ও Password প্রকাশ করবেন।<br><br><b style="font-size:18px">${formatRemainingTime(revealTime-now)}</b></div><div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div></div>`);
+   return;
+  }
+  const roomId=getRoomId(match),password=getRoomPassword(match);
+  if(!roomId&&!password){
+   showModal(`<div style="text-align:center;padding:12px 5px"><div style="font-size:42px">🔐</div><h3>Room Details</h3><div class="cooldown-notice"><b>এই ম্যাচের রুম আইডি পাসওয়ার্ড এখনো দেওয়া হয়নি।</b><br><br>অ্যাডমিন Room ID ও Password দিলেই এখানে দেখতে পারবেন।</div><div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div></div>`);
+   return;
+  }
+  showModal(`<div style="text-align:center"><div style="font-size:35px">🔑</div><h3>Room Details</h3></div>
+   <div class="detail-section"><h4>Room ID</h4><p style="font-size:20px;font-weight:800;color:#222;word-break:break-all">${escapeHTML(roomId||"এখনো দেওয়া হয়নি")}</p></div>
+   <div class="detail-section"><h4>Room Password</h4><p style="font-size:20px;font-weight:800;color:#222;word-break:break-all">${escapeHTML(password||"এখনো দেওয়া হয়নি")}</p></div>
+   <p class="small-note" style="margin-top:12px">এই Room Details শুধুমাত্র এই ম্যাচে Join করা খেলোয়াড়দের জন্য।</p>
+   <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div>`);
+ }catch(error){
+  console.error("Room Details Error:",error);closeModal();
+  if(error.code==="PERMISSION_DENIED")toast("Room Details দেখার অনুমতি নেই");
+  else toast("Room Details লোড করা যায়নি");
+ }
+}
+
+/* PLAYER DETAILS / MATCH JOIN */
+function getPlayerGameName(){return userData.gameName||userData.freeFireName||userData.playerName||"";}
+function getPlayerGameUid(){return userData.gameUid||userData.freeFireUid||userData.ffUid||"";}
+
+function startJoin(matchId){
+ if(!currentUser)return toast("প্রথমে Login করুন");
+ const m=allMatches[matchId];if(!m)return toast("ম্যাচ পাওয়া যায়নি");
+ if(isJoinedPlayer(myJoins[matchId]))return toast("আপনি ইতিমধ্যে এই ম্যাচে Join করেছেন");
+ if(!isMatchJoinTimeOpen(m))return toast("ম্যাচ শুরু হয়ে গেছে অথবা Admin-এর সময় নির্ধারণ করা নেই");
+ if(["completed","closed","full"].includes(matchStatus(m)))return toast("এই ম্যাচে Join করা যাচ্ছে না");
+ if(getJoinedCount(m)>=getMaxPlayers(m))return toast("ম্যাচের সব Slot পূর্ণ");
+ showModal(`<h3>Match Join</h3><p>${escapeHTML(getMatchTitle(m))}</p>
+  ${getMatchCountdownHTML(m)}
+  <p>Entry Fee: <b>${money(getEntryFee(m))}</b></p>
+  <div class="field"><label>Free Fire Player Name</label><input id="joinGameName" value="${escapeHTML(getPlayerGameName())}" placeholder="আপনার Free Fire Name"></div>
+  <div class="field"><label>Free Fire UID</label><input id="joinGameUid" value="${escapeHTML(getPlayerGameUid())}" placeholder="আপনার Free Fire UID" inputmode="numeric"></div>
+  <p>Wallet Balance: <b>${money(getAvailableBalance())}</b></p>
+  <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Cancel</button><button class="btn btn-green" id="confirmJoinBtn" onclick="confirmJoin('${escapeHTML(matchId)}')">Confirm Join</button></div>`);
+}
+
+function getAvailableBalance(){
+ if(hasSplitWallet())return Number(userData.depositCash??userData.depositBalance??0)+Number(userData.winningBalance??0);
+ return Number(userData.balance??0);
+}
+function hasSplitWallet(){
+ return userData.depositCash!==undefined||userData.depositBalance!==undefined||userData.winningBalance!==undefined;
+}
+function deductWalletLocally(user,fee){
+ return ref("users/"+user.uid).transaction(data=>{
+  if(!data)return;
+  data={...data};
+  const depositKey=data.depositCash!==undefined?"depositCash":data.depositBalance!==undefined?"depositBalance":"depositCash";
+  let deposit=Number(data[depositKey]||0),winning=Number(data.winningBalance||0),balance=Number(data.balance||0);
+  if(data.depositCash!==undefined||data.depositBalance!==undefined||data.winningBalance!==undefined){
+   if(deposit+winning<fee)return;
+   const fromDeposit=Math.min(deposit,fee);
+   deposit-=fromDeposit;winning-=fee-fromDeposit;
+   data[depositKey]=deposit;data.winningBalance=winning;
+  }else{
+   if(balance<fee)return;
+   data.balance=balance-fee;
+  }
+  return data;
+ },undefined,false);
+}
+async function confirmJoin(matchId){
+ const button=$("confirmJoinBtn");
+ if(button){button.disabled=true;button.textContent="Processing...";}
+ const name=$("joinGameName").value.trim(),uid=$("joinGameUid").value.trim();
+ if(!name||!uid){
+  if(button){button.disabled=false;button.textContent="Confirm Join";}
+  return toast("Player Name এবং UID লিখুন");
+ }
+ try{
+  const existing=await ref("joins/"+currentUser.uid+"/"+matchId).once("value");
+  if(existing.exists())throw new Error("আপনি ইতিমধ্যে Join করেছেন");
+  const matchSnap=await ref("matches/"+matchId).once("value"),latestMatch=matchSnap.val();
+  if(!latestMatch)throw new Error("ম্যাচটি আর পাওয়া যাচ্ছে না");
+  if(!isMatchJoinTimeOpen(latestMatch))throw new Error("ম্যাচ শুরু হয়ে গেছে অথবা Join করার সময় শেষ");
+  if(["completed","closed","full"].includes(matchStatus(latestMatch)))throw new Error("এই ম্যাচে Join করা যাচ্ছে না");
+  if(getJoinedCount(latestMatch)>=getMaxPlayers(latestMatch))throw new Error("ম্যাচের সব Slot পূর্ণ");
+
+  const fee=getEntryFee(latestMatch);
+  const deduction=await deductWalletLocally(currentUser,fee);
+  if(!deduction.committed)throw new Error("পর্যাপ্ত Balance নেই");
+
+  const now=timestamp();
+  const joinData={
+   uid:currentUser.uid,userId:currentUser.uid,matchId,
+   matchName:getMatchTitle(latestMatch),playerName:name,gameName:name,
+   gameUid:uid,freeFireUid:uid,entryFee:fee,status:"pending",joinedAt:now
+  };
+  try{
+   const updates={};
+   updates[ROOT+"/joins/"+currentUser.uid+"/"+matchId]=joinData;
+   updates[ROOT+"/joinRequests/"+matchId+"/"+currentUser.uid]=joinData;
+   updates[ROOT+"/transactions/"+currentUser.uid+"/"+now]={
+    type:"match_entry",title:"Match Entry - "+getMatchTitle(latestMatch),
+    amount:fee,matchId,status:"success",createdAt:now
+   };
+   await db.ref().update(updates);
+  }catch(writeError){
+   await restoreWalletAfterFailedJoin(currentUser.uid,fee);
+   throw writeError;
+  }
+  await ref("users/"+currentUser.uid).update({gameName:name,gameUid:uid});
+  closeModal();toast("Join Request সফল হয়েছে। Admin অনুমোদন করলে Room Details দেখতে পারবেন।");openPage("matches");
+ }catch(error){
+  console.error(error);
+  if(button){button.disabled=false;button.textContent="Confirm Join";}
+  toast(error.message||"Join করা যায়নি");
+ }
+}
+async function restoreWalletAfterFailedJoin(uid,fee){
+ try{
+  await ref("users/"+uid).transaction(data=>{
+   if(!data)return;
+   data={...data};
+   if(data.depositCash!==undefined||data.depositBalance!==undefined||data.winningBalance!==undefined){
+    const key=data.depositCash!==undefined?"depositCash":"depositBalance";
+    data[key]=Number(data[key]||0)+fee;
+   }else data.balance=Number(data.balance||0)+fee;
+   return data;
+  });
+ }catch(e){console.error("Wallet restore failed",e);}
+}
+
+/* MY MATCHES */
+function renderMyMatches(){
+ const container=$("myMatchList");if(!container)return;
+ const entries=Object.entries(myJoins||{});
+ if(!entries.length){container.innerHTML='<div class="empty">আপনি এখনো কোনো ম্যাচে Join করেননি।</div>';return;}
+ container.innerHTML=entries.map(([matchId,join])=>{
+  const m=allMatches[matchId]||{},status=joinStatus(join),joined=isJoinedPlayer(join);
+  const approved=isApproved(join),rejected=isRejectedJoin(join);
+  return `<div class="match-card">
+   <h3>${escapeHTML(join.matchName||getMatchTitle(m)||"Tournament Match")}</h3>
+   <p style="font-size:12px;color:#888;margin:5px 0">Player: ${escapeHTML(join.playerName||join.gameName||"")}</p>
+   <p style="font-size:12px;color:#888">UID: ${escapeHTML(join.gameUid||join.freeFireUid||"")}</p>
+   <p style="margin:8px 0">Registration Status:
+    <b style="color:${approved?'#0aaf70':rejected?'#e55':'#d58a20'}">${escapeHTML(status.toUpperCase())}</b>
+   </p>
+   <p style="font-size:12px;color:#888">${escapeHTML(formatDateTime(m))}</p>
+   ${joined?`<button class="btn btn-purple" style="width:100%;margin-top:10px" onclick="showRoomDetails('${escapeHTML(matchId)}')">🔑 Room Details</button>`:'<p class="small-note" style="margin-top:10px">এই Registration বাতিল বা Reject করা হয়েছে।</p>'}
+  </div>`;
+ }).join("");
+}
+
+/* RESULTS */
+function renderResults(){
+ const list=objectValues(allResults);
+ if(!list.length){$("resultsList").innerHTML='<div class="empty">এখনো কোনো Result প্রকাশ করা হয়নি।</div>';return;}
+ $("resultsList").innerHTML=list.map(r=>`
+  <div class="result-card">
+   <h3>${escapeHTML(r.matchName||r.title||"Match Result")}</h3>
+   <p>${escapeHTML(r.date||"")}</p>
+   ${r.winners?'<p>Winner: '+escapeHTML(typeof r.winners==="string"?r.winners:JSON.stringify(r.winners))+'</p>':""}
+   ${r.description?'<p>'+escapeHTML(r.description)+'</p>':""}
+  </div>`).join("");
+}
+
+/* PROFILE */
+function renderHeader(){$("headerBalance").textContent=Number(getAvailableBalance()).toLocaleString("en-US");}
+function renderProfile(){
+ if(!currentUser)return;
+ $("profileName").textContent=userData.name||userData.gameName||currentUser.displayName||"Player";
+ $("profileEmail").textContent=userData.email||currentUser.email||"";
+ $("playedCount").textContent=Number(userData.played||0);
+ $("wonCount").textContent=Number(userData.won||0);
+ renderHeader();
+}
+function editProfile(){
+ showModal(`<h3>My Profile</h3>
+  <div class="field"><label>Name</label><input id="editName" value="${escapeHTML(userData.name||"")}"></div>
+  <div class="field"><label>Free Fire Name</label><input id="editFFName" value="${escapeHTML(getPlayerGameName())}"></div>
+  <div class="field"><label>Free Fire UID</label><input id="editFFUid" value="${escapeHTML(getPlayerGameUid())}"></div>
+  <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Cancel</button><button class="btn btn-green" onclick="saveProfile()">Save</button></div>`);
+}
+async function saveProfile(){
+ const name=$("editName").value.trim(),gameName=$("editFFName").value.trim(),gameUid=$("editFFUid").value.trim();
+ if(!name)return toast("নাম লিখুন");
+ try{await ref("users/"+currentUser.uid).update({name,gameName,gameUid});closeModal();toast("Profile Update হয়েছে");}
+ catch(e){toast(e.message);}
+}
+
+/* WALLET */
+function openWallet(){
+ if(!currentUser)return;
+ const deposit=Number(userData.depositCash??userData.depositBalance??0),winning=Number(userData.winningBalance||0);
+ const total=hasSplitWallet()?deposit+winning:Number(userData.balance||0);
+ showModal(`<h3>My Wallet</h3>
+  <div class="balance-card"><small>TOTAL CASH</small><h2>${money(total)}</h2><small>Available Balance</small></div>
+  <div class="balance-grid">
+   <div><small>Winning Cash</small><b>${money(winning)}</b></div>
+   <div><small>Deposit Cash</small><b>${money(deposit||(!hasSplitWallet()?total:0))}</b></div>
+   <div><small>Total Cash</small><b>${money(total)}</b></div>
+  </div>
+  <div class="action-grid"><button class="btn btn-orange" onclick="openWithdraw()">WITHDRAW</button><button class="btn btn-green" onclick="openDeposit()">ADD MORE</button></div>
+  <button class="btn btn-blue" style="width:100%;margin-top:12px" onclick="closeModal();showHistory()">My History</button>
+  <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div>`);
+}
+
+/* DEPOSIT & PAYMENT (PAYMENT NUMBERS FIXED) */
+function openDeposit(){
+ showModal(`<h3>টাকা যোগ করুন</h3><p>আপনার পছন্দের Payment Method নির্বাচন করুন।</p>
+  <div class="payment-methods">
+   <button class="payment-method" onclick="selectPayment('bKash')"><span class="pm-icon">🩷</span>bKash</button>
+   <button class="payment-method" onclick="selectPayment('Nagad')"><span class="pm-icon">🟠</span>Nagad</button>
+   <button class="payment-method" onclick="selectPayment('Rocket')"><span class="pm-icon">🟣</span>Rocket</button>
+  </div><div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div>`);
+}
+
+function getPaymentSettings(method){
+ const payNum = appSettings.paymentNumbers || {};
+ const key = String(method || "").toLowerCase();
+ if (key.includes("bkash")) return payNum.bkash || {};
+ if (key.includes("nagad")) return payNum.nagad || {};
+ if (key.includes("rocket")) return payNum.rocket || {};
+ 
+ const payments = appSettings.paymentMethods || appSettings.payments || {};
+ return payments[method] || payments[key] || payNum[key] || {};
+}
+
+function selectPayment(method){
+ const settings = getPaymentSettings(method);
+ const number = settings.number || settings.accountNumber || settings.account || "";
+ const payNum = appSettings.paymentNumbers || {};
+ const instructions = payNum.instructions || appSettings.instructions || `১. আপনার ${escapeHTML(method)} অ্যাপ খুলুন।\n২. Send Money / Cash In অপশন নির্বাচন করুন।\n৩. নিচের নম্বরে টাকা পাঠান।\n৪. টাকা পাঠানোর পর Transaction ID দিন।`;
+
+ showModal(`<h3>${escapeHTML(method)} Payment</h3>
+  <div style="background:#fff0f7;padding:15px;border-radius:12px;margin:10px 0;white-space:pre-line">
+   <p>${escapeHTML(instructions).replace(/\n/g, '<br>')}</p>
+   <p style="font-size:19px;text-align:center;color:#d44;font-weight:700;margin-top:10px">${escapeHTML(number||"Admin-এর নম্বর সেট করা হয়নি")}</p>
+   ${settings.type?'<p style="text-align:center;font-size:12px;color:#666;margin-top:4px">Account Type: <b>'+escapeHTML(settings.type)+'</b></p>':''}
+  </div>
+  <div class="field"><label>Amount (৳)</label><input id="depositAmount" type="number" min="1" placeholder="টাকার পরিমাণ"></div>
+  <div class="field"><label>Transaction ID</label><input id="depositTrx" placeholder="Transaction ID"></div>
+  <div class="field"><label>আপনার ${escapeHTML(method)} নম্বর</label><input id="depositSender" inputmode="numeric" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন"></div>
+  <div class="field"><label>Payment Screenshot (ঐচ্ছিক)</label><input id="depositImage" type="file" accept="image/*"></div>
+  <div class="modal-actions"><button class="btn btn-gray" onclick="openDeposit()">Back</button><button class="btn btn-green" onclick="submitDeposit('${escapeHTML(method)}')">Submit</button></div>`);
+}
+
+async function uploadCloudinary(file){
+ if(!file)return "";
+ if(!file.type.startsWith("image/"))throw new Error("শুধু Image Upload করা যাবে");
+ if(file.size>5*1024*1024)throw new Error("ছবির সাইজ ৫ MB-এর বেশি হতে পারবে না");
+ const form=new FormData();form.append("file",file);form.append("upload_preset",CLOUDINARY_PRESET);
+ const response=await fetch(CLOUDINARY_URL,{method:"POST",body:form}),data=await response.json();
+ if(!response.ok)throw new Error(data.error?.message||"Image Upload হয়নি");
+ return data.secure_url||"";
+}
+async function submitDeposit(method){
+ const amount=Number($("depositAmount").value),trx=$("depositTrx").value.trim();
+ const sender=$("depositSender").value.trim(),file=$("depositImage").files[0];
+ if(!amount||amount<=0||!trx)return toast("সঠিক Amount এবং Transaction ID দিন");
+ try{
+  showLoading("Payment Request পাঠানো হচ্ছে...");
+  const imageUrl=await uploadCloudinary(file),id=ref("depositRequests").push().key;
+  const request={id,uid:currentUser.uid,userId:currentUser.uid,userName:userData.name||currentUser.email||"",email:currentUser.email||"",method,amount,transactionId:trx,senderNumber:sender,screenshot:imageUrl,status:"pending",createdAt:timestamp()};
+  await ref("depositRequests/"+id).set(request);
+  closeModal();toast("Deposit Request পাঠানো হয়েছে। Admin যাচাই করবেন।");
+ }catch(e){closeModal();toast(e.message||"Request পাঠানো যায়নি");}
+}
+
+/* WITHDRAW */
+function getWithdrawBalance(data=userData){
+ return Number(data.winningBalance??data.balance??0);
+}
+function getWithdrawCooldownRemaining(){
+ const last=Number(userData.lastWithdrawRequestAt||0);
+ if(!last)return 0;
+ return Math.max(0,WITHDRAW_COOLDOWN-(timestamp()-last));
+}
+function formatCooldown(ms){
+ const totalSeconds=Math.ceil(ms/1000),hours=Math.floor(totalSeconds/3600);
+ const minutes=Math.floor((totalSeconds%3600)/60),seconds=totalSeconds%60;
+ return hours+" ঘণ্টা "+minutes+" মিনিট "+seconds+" সেকেন্ড";
+}
+function openWithdraw(){
+ const balance=getWithdrawBalance(),remaining=getWithdrawCooldownRemaining(),blocked=remaining>0;
+ showModal(`<h3>Withdraw Money</h3>
+  <div class="balance-card"><small>WITHDRAWABLE BALANCE</small><h2>${money(balance)}</h2></div>
+  ${blocked?`<div class="cooldown-notice">⏳ আপনার শেষ Withdraw Request জমা হয়েছে। নতুন Request করতে পারবেন আরও <b>${formatCooldown(remaining)}</b> পরে।</div>`:'<div class="cooldown-notice" style="background:#e9fff4;color:#16845b">✓ আপনি এখন Withdraw Request করতে পারবেন। একটি Request জমা দেওয়ার পর পরবর্তী Request-এর জন্য ১২ ঘণ্টা অপেক্ষা করতে হবে।</div>'}
+  <div class="field"><label>Payment Method</label><select id="withdrawMethod"><option value="bKash">bKash</option><option value="Nagad">Nagad</option><option value="Rocket">Rocket</option></select></div>
+  <div class="field"><label>Account Number</label><input id="withdrawNumber" inputmode="numeric" placeholder="আপনার নম্বর"></div>
+  <div class="field"><label>Amount</label><input id="withdrawAmount" type="number" min="1" placeholder="টাকার পরিমাণ"></div>
+  <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Cancel</button><button class="btn btn-orange" id="withdrawSubmitBtn" onclick="submitWithdraw()" ${blocked?'disabled style="opacity:.5"':''}>${blocked?'১২ ঘণ্টা অপেক্ষা করুন':'Request Withdraw'}</button></div>`);
+}
+
+async function submitWithdraw(){
+ if(withdrawSubmitting)return;
+ if(!currentUser)return toast("প্রথমে Login করুন");
+
+ const button=$("withdrawSubmitBtn");
+ const method=$("withdrawMethod").value;
+ const number=$("withdrawNumber").value.trim();
+ const amount=Number($("withdrawAmount").value);
+
+ if(!number||!amount||!Number.isFinite(amount)||amount<=0)
+  return toast("সব তথ্য সঠিকভাবে পূরণ করুন");
+
+ if(getWithdrawCooldownRemaining()>0)
+  return toast("১২ ঘণ্টার Cooldown শেষ হয়নি");
+
+ withdrawSubmitting=true;
+ if(button){button.disabled=true;button.textContent="Processing...";}
+
+ const now=timestamp();
+ const userRef=ref("users/"+currentUser.uid);
+ const requestRef=ref("withdrawRequests").push();
+ const requestId=requestRef.key;
+ let transactionCommitted=false;
+
+ try{
+  const reservation=await userRef.transaction(data=>{
+   if(!data)return;
+   data={...data};
+
+   const last=Number(data.lastWithdrawRequestAt||0);
+   if(last>0&&now-last<WITHDRAW_COOLDOWN)return;
+
+   const hasSplit=
+    data.winningBalance!==undefined||
+    data.depositCash!==undefined||
+    data.depositBalance!==undefined;
+
+   if(hasSplit){
+    const winning=Number(data.winningBalance||0);
+    if(winning<amount)return;
+    data.winningBalance=winning-amount;
+   }else{
+    const balance=Number(data.balance||0);
+    if(balance<amount)return;
+    data.balance=balance-amount;
+   }
+
+   data.lastWithdrawRequestAt=now;
+   return data;
+  },undefined,false);
+
+  if(!reservation.committed)
+   throw new Error("পর্যাপ্ত Withdrawable Balance নেই অথবা ১২ ঘণ্টার Cooldown চলছে");
+
+  transactionCommitted=true;
+
+  const request={
+   id:requestId,
+   uid:currentUser.uid,
+   userId:currentUser.uid,
+   userName:userData.name||"",
+   email:currentUser.email||"",
+   method,
+   number,
+   amount,
+   status:"pending",
+   deducted:true,
+   refunded:false,
+   createdAt:now
+  };
+
+  const updates={};
+  updates[ROOT+"/withdrawRequests/"+requestId]=request;
+  updates[ROOT+"/transactions/"+currentUser.uid+"/"+requestId]={
+   type:"withdraw",
+   title:"Withdraw Request",
+   amount,
+   requestId,
+   status:"pending",
+   createdAt:now
+  };
+
+  try{
+   await db.ref().update(updates);
+  }catch(writeError){
+   await refundFailedWithdrawRequest(currentUser.uid,requestId,amount,now);
+   transactionCommitted=false;
+   throw writeError;
+  }
+
+  closeModal();
+  toast("Withdraw Request জমা হয়েছে। Withdrawable Balance থেকে টাকা কেটে রাখা হয়েছে।");
+
+ }catch(error){
+  console.error("Withdraw request error:",error);
+  if(button){button.disabled=false;button.textContent="Request Withdraw";}
+  toast(error.message||"Withdraw Request পাঠানো যায়নি");
+ }finally{
+  withdrawSubmitting=false;
+ }
+}
+
+async function refundFailedWithdrawRequest(uid,requestId,amount,requestTime){
+ const userRef=ref("users/"+uid);
+ const result=await userRef.transaction(data=>{
+  if(!data)return;
+  data={...data};
+  data.withdrawRefunds=data.withdrawRefunds||{};
+  if(data.withdrawRefunds[requestId])return;
+
+  const hasSplit=
+   data.winningBalance!==undefined||
+   data.depositCash!==undefined||
+   data.depositBalance!==undefined;
+
+  if(hasSplit)data.winningBalance=Number(data.winningBalance||0)+amount;
+  else data.balance=Number(data.balance||0)+amount;
+
+  data.withdrawRefunds[requestId]={
+   amount,
+   refundedAt:timestamp(),
+   reason:"request_write_failed"
+  };
+
+  if(Number(data.lastWithdrawRequestAt)===requestTime)
+   delete data.lastWithdrawRequestAt;
+
+  return data;
+ },undefined,false);
+
+ if(!result.committed){
+  const check=await userRef.child("withdrawRefunds/"+requestId).once("value");
+  if(!check.exists())throw new Error("Withdraw টাকা ফেরত দেওয়া যাচাই করা যায়নি");
+ }
+}
+
+/* TRANSACTION HISTORY */
+async function showHistory(){
+ try{
+  const snap=await ref("transactions/"+currentUser.uid).once("value");
+  const transactions=objectValues(snap.val()).sort((a,b)=>(Number(b.createdAt)||0)-(Number(a.createdAt)||0));
+  const depositSnap=await ref("depositRequests").orderByChild("uid").equalTo(currentUser.uid).once("value");
+  const withdrawSnap=await ref("withdrawRequests").orderByChild("uid").equalTo(currentUser.uid).once("value");
+  const extra=[
+   ...objectValues(depositSnap.val()).map(x=>({...x,type:"deposit",title:"Add Money"})),
+   ...objectValues(withdrawSnap.val()).map(x=>({...x,type:"withdraw",title:"Withdraw"}))
+  ];
+  const all=[...transactions,...extra].sort((a,b)=>(Number(b.createdAt)||0)-(Number(a.createdAt)||0));
+  window.historyCache=all;
+  showModal(`<h3>My History</h3>
+   <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+    <button class="btn btn-purple" onclick="filterHistory('all')">All</button>
+    <button class="btn btn-blue" onclick="filterHistory('deposit')">Add Money</button>
+    <button class="btn btn-green" onclick="filterHistory('match_entry')">Match Entry</button>
+    <button class="btn btn-orange" onclick="filterHistory('withdraw')">Withdraw</button>
+   </div>
+   <div id="historyItems">${historyHTML(all)}</div>
+   <div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div>`);
+ }catch(e){toast("History লোড হয়নি: "+e.message);}
+}
+function historyHTML(list){
+ if(!list.length)return '<div class="empty">কোনো Transaction পাওয়া যায়নি।</div>';
+ return list.map(t=>`
+  <div class="history-item">
+   <div><b>${escapeHTML(t.title||t.type||"Transaction")}</b><small>${escapeHTML(t.status||"pending")} · ${escapeHTML(t.date||new Date(t.createdAt||0).toLocaleString())}</small></div>
+   <b>${money(t.amount)}</b>
+  </div>`).join("");
+}
+function filterHistory(type){
+ const list=window.historyCache||[];
+ const filtered=type==="all"?list:list.filter(t=>{
+  const current=String(t.type||"").toLowerCase();
+  if(type==="deposit")return current==="deposit"||current==="add_money";
+  if(type==="withdraw")return current==="withdraw";
+  return current==="match_entry"||current==="entry_fee";
+ });
+ $("historyItems").innerHTML=historyHTML(filtered);
+}
+
+/* RULES */
+function renderRulesContent(){
+ const rules=appSettings.rules||appSettings.notice||"";
+ window.currentRules=typeof rules==="string"?rules:(rules.text||rules.message||"");
+}
+function showRules(){
+ const rules=window.currentRules||"টুর্নামেন্টে অংশগ্রহণের আগে Admin-এর দেওয়া নিয়মাবলি ভালোভাবে পড়ে নিন।";
+ showModal(`<h3>All Rules</h3><div class="rule-box">${escapeHTML(rules).replace(/\n/g,"<br>")}</div><div class="modal-actions"><button class="btn btn-orange" onclick="closeModal()">Got it</button></div>`);
+}
+
+/* TOP PLAYERS */
+async function showTopPlayers(){
+ try{
+  const snap=await ref("users").once("value");
+  const users=objectValues(snap.val()).filter(u=>!u.banned);
+  users.sort((a,b)=>Number(b.won||0)-Number(a.won||0));
+  const html=users.slice(0,50).map((u,i)=>`
+   <div class="leader-row">
+    <div class="leader-number">${i+1}</div>
+    <div class="leader-info"><b>${escapeHTML(u.name||u.gameName||"Player")}</b><small>Won Amount: ${money(u.winningAmount||u.totalWon||0)}</small></div>
+    <b>${Number(u.won||0)} Wins</b>
+   </div>`).join("");
+  showModal(`<h3>TOP PLAYERS</h3>${html||'<div class="empty">কোনো Player পাওয়া যায়নি।</div>'}<div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div>`);
+ }catch(e){toast(e.message);}
+}
+function showDeveloper(){
+ showModal(`<h3>Developer Profile</h3><p>Gorib Gaming Club</p><p>Free Fire Tournament Platform</p><div class="modal-actions"><button class="btn btn-gray" onclick="closeModal()">Close</button></div>`);
+}
+
+/* NAVIGATION */
+function openPage(page){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ const target=$("page-"+page);if(target)target.classList.add("active");
+ document.querySelectorAll(".nav-item").forEach(n=>n.classList.toggle("active",n.dataset.page===page));
+ if(page==="play"){if(selectedCategory)renderSelectedCategoryMatches();else renderCategories();}
+ if(page==="matches")renderMyMatches();
+ if(page==="results")renderResults();
+ if(page==="profile")renderProfile();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+setInterval(()=>{
+ if(selectedCategory&&$("page-play").classList.contains("active"))
+  renderSelectedCategoryMatches();
+},1000);
+
+window.addEventListener("online",()=>toast("Internet connection ফিরে এসেছে"));
+window.addEventListener("offline",()=>toast("Internet connection নেই"));
+window.addEventListener("error",event=>console.error("App Error:",event.error||event.message));
+</script>
+</body>
+</html>
